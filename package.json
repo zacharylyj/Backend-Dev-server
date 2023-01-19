@@ -1,0 +1,29 @@
+{
+  "name": "ca2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ntr": "concurrently --kill-others \"nodemon ./backend/server\" \"nodemon ./frontend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zacharylyj/BED.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zacharylyj/BED/issues"
+  },
+  "homepage": "https://github.com/zacharylyj/BED#readme",
+  "dependencies": {
+    "axios": "^1.2.3",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20"
+  }
+}
