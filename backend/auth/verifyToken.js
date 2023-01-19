@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
-
 var verificationLib = {
 
     verifyToken: function (req, res, next) {
