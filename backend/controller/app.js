@@ -32,7 +32,7 @@ app.post('/staff', function (req, res) {
             res.send(`{"error_msg":"Internal server error"}`);
         }
         else {
-            if (!results[0].staff_id.isNan) {
+            if (results[0] !== undefined) {
                 console.log("Fetching key and payload");
                 var payload = { "last_name": results[0].last_name, "first_name": results[0].first_name };
 
@@ -173,11 +173,10 @@ app.put('/actors/:id', function (req, res) {
 app.delete('/actors/:id', function (req, res) {
     var actor_id = req.params.id;
     userDB.deleteActor(actor_id, function (err, results) {
-        if (err) {
-            console.log(err);
-            res.status(500);
+        if (err.message === 'not found') {
+            res.status(403);
             res.type('application/json');
-            res.send(`{"error_msg":"Internal server error"}`);
+            res.send(`{"login_error":"email or password is incorect"}`);
         }
         else {
             if (results.affectedRows >= 1) {
