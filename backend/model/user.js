@@ -19,23 +19,11 @@ var user = {
             else {
                 var sql = "select * from staff where email=? and password=?";
                 dbConn.query(sql, [email, password], function (err, results) {
+                    console.log(results)
                     dbConn.end();
-                    var jwtKey = ""
-
-                    if (results.length == 0) {
-                        console.log("Login Failed");
-                    }
-                    else {
-                        console.log("Login Success");
-                        var payload = { "username": results[0].username, "first_name": results[0].first_name };
-
-                        jwt.sign(payload, config.secretKey, { expiresIn: 86400 }, function (err, jwtKey) {
-                            var message = { "JWT": jwtKey }
-                            return callback(err, message);
-
-                        });
-                    }
+                    return callback(err, results)
                 });
+
             }
         });
     },
@@ -48,7 +36,6 @@ var user = {
                 return callback(err, null);
             }
             else {
-
                 var sql = "select actor_id, first_name, last_name from actor where actor_id=?";
                 dbConn.query(sql, [actor_id], function (err, results) {
                     dbConn.end();

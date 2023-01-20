@@ -7,17 +7,22 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var userDB = require('../model/user');
 var verificationLib = require('../auth/verifyToken');
+var jwt = require('jsonwebtoken')
+var config = require('../config/config')
 
 var app = express();
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
 app.use(bodyParser.json());
+
+var cors = require('cors');
+app.use(cors());
 //////////////////////////////////////////////////////////////////////////
 //login
 app.post('/staff', function (req, res) {
-    var email = req.params.email;
-    var password = req.params.password;
+    var email = req.body.email;
+    var password = req.body.password;
 
     userDB.loginStaff(email, password, function (err, results) {
         if (err) {
@@ -25,23 +30,35 @@ app.post('/staff', function (req, res) {
             res.status(500);
             res.type('application/json');
             res.send(`{"error_msg":"Internal server error"}`);
+        }
+        else {
+            if (!results[0].staff_id.isNan) {
+                console.log("Fetching key and payload");
+                var payload = { "last_name": results[0].last_name, "first_name": results[0].first_name };
 
-        } else {
-            if (results.length == 1) {
-                res.status(200);
-                res.type('application/json');
-                res.send(results);
+                jwt.sign(payload, config.secretKey, { expiresIn: 86400 }, function (err, jwtKey) {
+                    var message = { "JWT": jwtKey, "payload": payload }
+                    if (err) {
+                        res.status(401);
+                        res.type('application/json');
+                        res.send(err);
+
+                    }
+                    else {
+                        res.status(200);
+                        res.type('application/json');
+                        res.send(message);
+                    }
+                });
             }
-
             else {
-                res.status(200);
-                res.type('application/json');
-                res.send(results);
+                console.log(err)
             }
         }
+
+
     });
 });
-
 //////////////////////////////////////////////////////////////////////////
 //1st endpoint
 app.get('/actors/:id', verificationLib.verifyToken, function (req, res) {
