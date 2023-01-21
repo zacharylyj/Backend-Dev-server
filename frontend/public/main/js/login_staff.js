@@ -7,22 +7,22 @@ $("#login-form").submit(function (k) {
 
     console.log(req)
     axios.post('http://localhost:8081/staff', req)
-        .then(response => {
-            if (response.data.JWT) {
-                localStorage.setItem('JWT', response.data.JWT);
-                localStorage.setItem('payload', JSON.stringify(response.data.payload));
-                window.location.href = '/index.html'
-                // redirect to the home page or display a message
-            } 
-        })
-        .catch(error => {
-            if (error.response.status === 403){
-                alert("Email or Password is incorrect");
-            }
-            else{            
-                alert("Error in connecting to the server");
-                console.log(error)
-            }
-        })
+    .then(response => {
+        if (response.data.JWT) {
+            localStorage.setItem('JWT', response.data.JWT);
+            localStorage.setItem('payload', JSON.stringify(response.data.payload));
+            window.location.href = '/index.html'
+            // redirect to the home page or display a message
+        } 
+    })
+    .catch(error => {
+        if (error.response.status === 403){
+            alert("Email or Password is incorrect");
+        }
+        else{            
+            alert("Error in connecting to the server");
+            console.log(error)
+        }
+    })
 })
 
