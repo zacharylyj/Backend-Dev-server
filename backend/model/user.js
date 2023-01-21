@@ -12,33 +12,36 @@ var user = {
     //login
     loginStaff: function (email, password, callback) {
         var dbConn = dbConfig.getConnection();
-        console.log("a")
         var sql2 = "select count(*) from staff where email=? and password=?";
         dbConn.query(sql2, [email, password], function (err, results) {
-            if (results[0]['count(*)'] == 1) {
-                var sql = "select * from staff where email=? and password=?";
-                dbConn.query(sql, [email, password], function (err, results) {
-                    if (err) {
-                        console.log(err);
-                        return callback(err, null);
-                    }
-                    else {
-                        dbConn.end();
-                        return callback(err, results)
-                    }
-                })
+            if (results == undefined) {
+                return callback(err, null);
             }
             else {
-                return callback(new Error('not found'), null);
+                if (results[0]['count(*)'] == 1) {
+                    var sql = "select * from staff where email=? and password=?";
+                    dbConn.query(sql, [email, password], function (err, results) {
+                        if (err) {
+                            console.log(err);
+                            return callback(err, null);
+                        }
+                        else {
+                            dbConn.end();
+                            return callback(err, results)
+                        }
+                    })
+                }
+                else {
+                    return callback(new Error('not found'), null);
+                }
             }
-        
         });
     },
     //////////////////////////////////////////////////////////////////////////
     //1st endpoint
     getActor: function (actor_id, callback) {
         var dbConn = dbConfig.getConnection();
-        
+
         dbConn.connect(function (err) {
             if (err) {
                 return callback(err, null);

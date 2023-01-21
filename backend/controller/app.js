@@ -25,11 +25,18 @@ app.post('/staff', function (req, res) {
     var password = req.body.password;
 
     userDB.loginStaff(email, password, function (err, results) {
-        if (err) {
-            console.log(err);
-            res.status(500);
-            res.type('application/json');
-            res.send(`{"error_msg":"Internal server error"}`);
+        console.log(err)
+        if (err) { 
+            if (err.message === 'not found') {
+                res.status(403);
+                res.type('application/json');
+                res.send(`{"incorrect_data":"Email or Password is incorrect"}`);
+            }
+            else { 
+                res.status(500);
+                res.type('application/json');
+                res.send(`{"error_msg":"Internal server error"}`);
+            }
         }
         else {
             if (results[0] !== undefined) {

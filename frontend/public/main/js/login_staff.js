@@ -14,7 +14,7 @@ $("#login-form").submit(function (k) {
                 window.location.href = '/index.html'
                 // redirect to the home page or display a message
             } else {
-                alert("Email or password is incorrect");
+                alert("Email or Password is incorrect");
                 console.log('error')
             }
         })
