@@ -41,7 +41,7 @@ app.post('/staff', function (req, res) {
         else {
             if (results[0] !== undefined) {
                 console.log("Fetching key and payload");
-                var payload = { "last_name": results[0].last_name, "first_name": results[0].first_name };
+                var payload = {"staff_id": results[0].staff_id, "first_name": results[0].first_name, "last_name": results[0].last_name, "address_id": results[0].address_id, "email": results[0].email, "store_id": results[0].store_id, "username": results[0].username, "password": results[0].password, "last_update": results[0].last_update};
 
                 jwt.sign(payload, config.secretKey, { expiresIn: 86400 }, function (err, jwtKey) {
                     var message = { "JWT": jwtKey, "payload": payload }
@@ -64,6 +64,56 @@ app.post('/staff', function (req, res) {
         }
 
 
+    });
+});
+//////////////////////////////////////////////////////////////////////////
+//get flim cat     
+app.get('/film_catergories', verificationLib.verifyToken, function (req, res) {
+    userDB.flimcat(function (err, results) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+            res.type('application/json');
+            res.send(`{"error_msg":"Internal server error"}`);
+
+        } else {
+            var payload = [];
+            for (var k = 0; k < results.length; k++) {
+                payload.push(results[k].name);
+            }
+            res.status(200);
+            res.type('application/json');
+            res.send(payload);
+        }
+    });
+});
+//////////////////////////////////////////////////////////////////////////
+//get flim cat
+app.get('/flim_caories', function (req, res) {
+    var limit = req.query.limit;
+    var offset = req.query.offset;
+
+    limit = limit ? parseInt(limit) : 20;
+    offset = offset ? parseInt(offset) : 0;
+
+    if (isNaN(limit) || isNaN(offset)) {
+        res.status(500);
+        res.type('application/json');
+        res.send(`{"error_msg" : "Internal server error"}`);
+    }
+
+    userDB.getActors(limit, offset, function (err, results) {
+        if (err) {
+            res.status(500);
+            res.type('application/json');
+            res.send(`{"error_msg":"Internal server error"}`);
+
+        } else {
+            res.status(200);
+            res.type('application/json');
+            res.send(results);
+
+        }
     });
 });
 //////////////////////////////////////////////////////////////////////////

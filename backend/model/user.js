@@ -38,6 +38,45 @@ var user = {
         });
     },
     //////////////////////////////////////////////////////////////////////////
+    //flim cat endpoint
+    flimcat: function (callback) {
+        var dbConn = dbConfig.getConnection();
+
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+                var sql = "select name from category";
+                dbConn.query(sql, function (err, results) {
+                    dbConn.end();
+                    return callback(err, results);
+                });
+            }
+        });
+    },
+
+    //////////////////////////////////////////////////////////////////////////
+    //flim endpoint
+    flim: function (limit, offset, callback) {
+        var dbConn = dbConfig.getConnection();
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+
+                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? ";
+                dbConn.query(sql, [limit, offset], function (err, results) {
+                    dbConn.end();
+                    return callback(err, results);
+
+                });
+            }
+        });
+    },
+
+    //////////////////////////////////////////////////////////////////////////
     //1st endpoint
     getActor: function (actor_id, callback) {
         var dbConn = dbConfig.getConnection();
