@@ -88,6 +88,32 @@ app.get('/film_catergories', verificationLib.verifyToken, function (req, res) {
     });
 });
 //////////////////////////////////////////////////////////////////////////
+//UPDATE staff endpoint
+app.put('/staff/:id', function (req, res) {
+    var staff_id = req.params.id;
+
+    userDB.updateStaff(req.body, staff_id, function (err, results) {
+        if (err) {
+            console.log(err);
+            res.type('application/json');
+            res.send(`{"error_msg":"Internal server error"}`);
+        }
+        else {
+            if (results.affectedRows >= 1) {
+                res.status(200);
+                res.type('application/json');
+                res.send(`{"success_msg": "record updated"}`);
+            }
+
+            else {
+                res.status(204);
+                res.send();
+            }
+
+        }
+    });
+});
+//////////////////////////////////////////////////////////////////////////
 //get flim cat
 app.get('/flim_caories', function (req, res) {
     var limit = req.query.limit;

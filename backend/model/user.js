@@ -55,7 +55,36 @@ var user = {
             }
         });
     },
+    //////////////////////////////////////////////////////////////////////////
+    //UPDATE staff endpoint
 
+    updateStaff: function (object, actor_id, callback) {
+        var dbConn = dbConfig.getConnection();
+        var { first_name, last_name } = object;
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+                if (last_name == undefined) {
+                    var sql = "update actor set first_name=? where actor_id=?";
+                    var params = [first_name, actor_id];
+                }
+                else if (first_name == undefined) {
+                    var sql = "update actor set last_name=? where actor_id=?";
+                    var params = [last_name, actor_id];
+                }
+                else {
+                    var sql = "update actor set first_name=?, last_name=? where actor_id=?";
+                    var params = [first_name, last_name, actor_id];
+                }
+                dbConn.query(sql, params, function (err, results) {
+                    dbConn.end();
+                    return callback(err, results);
+                });
+            }
+        });
+    },
     //////////////////////////////////////////////////////////////////////////
     //flim endpoint
     flim: function (limit, offset, callback) {
