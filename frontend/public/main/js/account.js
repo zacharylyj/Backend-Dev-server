@@ -26,8 +26,8 @@ $("#update_user_details").submit(function (k) {
             const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]+$/;
             return pwRegex.test(password);
         }
-        usernamelen = username.length
-        passwordlen = password.length
+        var usernamelen = username.length
+        var passwordlen = password.length
         
         if (usernamelen < 3) {
             alert(`{"username_error":"Username needs to have 3 or more characters"}`);
@@ -41,11 +41,19 @@ $("#update_user_details").submit(function (k) {
         else if (!(checkpw(req.body.password))) {
             alert(`{"password_error":"At least 1 Upper, Lower & Special Characters are required."}`);
         }
-        else if (password != password2){
+        else if (password != password2) {
             alert(`{"password_error":"Not Matching"}`);
         }
-        else{
-            const req = { email: email, password: password }
+        else {
+            const req = {first_name: first_name, last_name: last_name, email: email, username: username, password: password}
+
+
+
+
+            
+
+
+
 
             console.log(req)
             axios.post('http://localhost:8081/staff', req)
