@@ -26,6 +26,7 @@
 
   // Tab Section
   var initTabs = function(){
+    console.log("kmssssssssss")
     const tabs = document.querySelectorAll('[data-tab-target]')
     const tabContents = document.querySelectorAll('[data-tab-content]')
 
