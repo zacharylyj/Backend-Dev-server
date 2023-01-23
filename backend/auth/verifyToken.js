@@ -12,8 +12,10 @@ var verificationLib = {
 
             jwt.verify(jwtToken, config.secretKey, function (err, decoded) {
                 if (err) {
+                    console.log("gg")
                     res.status(403);
                     res.send(`{"Message": "Not Authorized"}`);
+
                 } 
                 else {
                     req.role = decoded.role;
@@ -24,6 +26,7 @@ var verificationLib = {
             });
         }
         else {
+            console.log("gg!")
             res.status(403);
             res.send(`{"Message": "Not Authorized"}`)
         }

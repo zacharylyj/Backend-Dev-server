@@ -46,15 +46,6 @@ $("#update_user_details").submit(function (k) {
         }
         else {
             const req = {first_name: first_name, last_name: last_name, email: email, username: username, password: password}
-
-
-
-
-            
-
-
-
-
             console.log(req)
             axios.post('http://localhost:8081/staff', req)
             .then(response => {
@@ -74,8 +65,6 @@ $("#update_user_details").submit(function (k) {
                     console.log(error)
                 }
             })
-
-
         }
     }
 })

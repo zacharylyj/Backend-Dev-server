@@ -19,12 +19,6 @@ $("#update_user_details").submit(function (k) {
         const password2 = $("#account-confirm-pass").val();
     }
     else{    
-        
-        
-       
-        
-        
-        
 
         function checkun(username) {
             const unRegex = /^[a-zA-Z0-9]+$/;

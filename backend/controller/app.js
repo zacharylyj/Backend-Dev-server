@@ -77,13 +77,9 @@ app.get('/film_catergories', verificationLib.verifyToken, function (req, res) {
             res.send(`{"error_msg":"Internal server error"}`);
 
         } else {
-            var payload = [];
-            for (var k = 0; k < results.length; k++) {
-                payload.push(results[k].name);
-            }
             res.status(200);
             res.type('application/json');
-            res.send(payload);
+            res.send(results);
         }
     });
 });
@@ -114,21 +110,24 @@ app.put('/staff/:id', function (req, res) {
     });
 });
 //////////////////////////////////////////////////////////////////////////
+//get flim title thingy
+app.get("/film_categories/:category_id/films", function (req, res) {
+    const category_id = req.params.category_id;
+    userDB.filmcard(category_id, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+            res.send({ "Message": "Internal server error" });
+        } else {
+            res.status(200);
+            res.send(result);
+        }
+    });
+});
+//////////////////////////////////////////////////////////////////////////
 //get flim cat
-app.get('/flim_caories', function (req, res) {
-    var limit = req.query.limit;
-    var offset = req.query.offset;
-
-    limit = limit ? parseInt(limit) : 20;
-    offset = offset ? parseInt(offset) : 0;
-
-    if (isNaN(limit) || isNaN(offset)) {
-        res.status(500);
-        res.type('application/json');
-        res.send(`{"error_msg" : "Internal server error"}`);
-    }
-
-    userDB.getActors(limit, offset, function (err, results) {
+app.get('/flim_content', function (req, res) {
+    userDB.getFlim_content(function (err, results) {
         if (err) {
             res.status(500);
             res.type('application/json');
@@ -276,21 +275,7 @@ app.delete('/actors/:id', function (req, res) {
     });
 });
 
-//////////////////////////////////////////////////////////////////////////
-//6th endpoint
-app.get("/film_categories/:category_id/films", function (req, res) {
-    const category_id = req.params.category_id;
-    userDB.innerjoin(category_id, function (err, result) {
-        if (err) {
-            console.log(err);
-            res.status(500);
-            res.send({ "Message": "Internal server error" });
-        } else {
-            res.status(200);
-            res.send(result);
-        }
-    });
-});
+///////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
 //7th endpoint

@@ -86,8 +86,29 @@ var user = {
         });
     },
     //////////////////////////////////////////////////////////////////////////
+    //get flim title thingy
+    filmcard: function (customer_id, callback) {
+        var dbConn = dbConfig.getConnection();
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            } else {
+                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =?";
+                dbConn.query(sql, [customer_id], function (err, results) {
+                    dbConn.end();
+                    if (err) {
+                        console.log(err);
+                        return callback(err, null);
+                    }
+                    console.log(results);
+                    return callback(null, results);
+                });
+            }
+        });
+    },
+    //////////////////////////////////////////////////////////////////////////
     //flim endpoint
-    flim: function (limit, offset, callback) {
+    getFlim_content: function (callback) {
         var dbConn = dbConfig.getConnection();
         dbConn.connect(function (err) {
             if (err) {
@@ -96,7 +117,7 @@ var user = {
             else {
 
                 var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? ";
-                dbConn.query(sql, [limit, offset], function (err, results) {
+                dbConn.query(sql, function (err, results) {
                     dbConn.end();
                     return callback(err, results);
 
@@ -223,25 +244,7 @@ var user = {
 
     //////////////////////////////////////////////////////////////////////////
     //6th endpoint
-    innerjoin: function (customer_id, callback) {
-        var dbConn = dbConfig.getConnection();
-        dbConn.connect(function (err) {
-            if (err) {
-                return callback(err, null);
-            } else {
-                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? LIMIT 3";
-                dbConn.query(sql, [customer_id], function (err, results) {
-                    dbConn.end();
-                    if (err) {
-                        console.log(err);
-                        return callback(err, null);
-                    }
-                    console.log(results);
-                    return callback(null, results);
-                });
-            }
-        });
-    },
+
     //////////////////////////////////////////////////////////////////////////
     //7th endpoint
     innerjoin2: function (customer_id, start_date, end_date, callback) {
