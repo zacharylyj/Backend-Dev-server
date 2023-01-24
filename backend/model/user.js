@@ -87,14 +87,14 @@ var user = {
     },
     //////////////////////////////////////////////////////////////////////////
     //get flim title thingy
-    filmcard: function (customer_id, callback) {
+    filmcard: function (cat_id, callback) {
         var dbConn = dbConfig.getConnection();
         dbConn.connect(function (err) {
             if (err) {
                 return callback(err, null);
             } else {
-                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? limit 1";
-                dbConn.query(sql, [customer_id], function (err, results) {
+                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? limit 2";
+                dbConn.query(sql, [cat_id], function (err, results) {
                     dbConn.end();
                     if (err) {
                         console.log(err);
@@ -108,19 +108,17 @@ var user = {
     },
     //////////////////////////////////////////////////////////////////////////
     //flim endpoint
-    getFlim_content: function (callback) {
+    getFlim_content: function (film_id, callback) {
         var dbConn = dbConfig.getConnection();
         dbConn.connect(function (err) {
             if (err) {
                 return callback(err, null);
             }
             else {
-
-                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? ";
-                dbConn.query(sql, function (err, results) {
+                var sql = "select f.film_id, f.title, c.name, f.release_year, f.description, f.rating, a.first_name, a.last_name from film as f  inner join film_category as fc on f.film_id = fc.film_id inner join category as c on fc.category_id = c.category_id inner join film_actor as fa on f.film_id = fa.film_id inner join actor as a on fa.actor_id = a.actor_id where f.film_id=?";
+                dbConn.query(sql, [film_id],function (err, results) {
                     dbConn.end();
                     return callback(err, results);
-
                 });
             }
         });

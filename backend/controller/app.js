@@ -126,8 +126,9 @@ app.get("/film_categories/:category_id/films", function (req, res) {
 });
 //////////////////////////////////////////////////////////////////////////
 //get flim cat
-app.get('/flim_content', function (req, res) {
-    userDB.getFlim_content(function (err, results) {
+app.get('/flim_content/:film_id', function (req, res) {
+    const film_id = req.params.film_id;
+    userDB.getFlim_content(film_id, function (err, results) {
         if (err) {
             res.status(500);
             res.type('application/json');

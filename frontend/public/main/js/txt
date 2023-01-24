@@ -46,11 +46,9 @@ axios.get('http://localhost:8081/film_catergories',{
             const newDiv = document.createElement('div')
             newDiv.classList.add("product-item", "col-lg-1", "col-md-2", "col-sm-2")
     
-            const imageHolder = document.createElement('a');
+            const imageHolder = document.createElement('div');
             imageHolder.className = 'image-holder';
     
-            imageHolder.href = `film_detail.html?film_id=${film.film_id}`;
-            
             const img = document.createElement('img');
             img.src = "images/selling-products6.jpg";
             img.alt = "Film";
@@ -114,10 +112,8 @@ axios.get('http://localhost:8081/film_catergories',{
             const newDiv = document.createElement('div')
             newDiv.classList.add("product-item", "col-lg-1", "col-md-2", "col-sm-2")
     
-            const imageHolder = document.createElement('a');
+            const imageHolder = document.createElement('div');
             imageHolder.className = 'image-holder';
-            imageHolder.href = `film_detail.html?film_id=${film.film_id}`;
-
     
             const img = document.createElement('img');
             img.src = "images/selling-products6.jpg";
