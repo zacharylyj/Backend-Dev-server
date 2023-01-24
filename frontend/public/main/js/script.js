@@ -25,26 +25,7 @@
   };
 
   // Tab Section
-  var initTabs = function(){
-    console.log("kmssssssssss")
-    const tabs = document.querySelectorAll('[data-tab-target]')
-    const tabContents = document.querySelectorAll('[data-tab-content]')
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => {
-          tabContent.classList.remove('active')
-        })
-        tabs.forEach(tab => {
-          tab.classList.remove('active')
-        })
-        tab.classList.add('active')
-        target.classList.add('active')
-      })
-    });
-  }
-
+  
   // init jarallax parallax
   var initJarallax = function() {
     jarallax(document.querySelectorAll(".jarallax"));
@@ -57,7 +38,6 @@
   // document ready
   $(document).ready(function() {
     initHamburgerMenu();
-    initTabs();
     initJarallax();
 
     jQuery('.stellarnav').stellarNav({

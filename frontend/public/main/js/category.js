@@ -10,7 +10,7 @@ axios.get('http://localhost:8081/film_catergories',{
     var li = document.createElement('li');
     li.innerText = "All";
     li.setAttribute("data-tab-target", "#all");
-    li.classList.add("tab", "active");
+    li.classList.add("active", "tab");
     ul.appendChild(li);
 
     cat_list.map(cat => {
@@ -20,13 +20,12 @@ axios.get('http://localhost:8081/film_catergories',{
         li.classList.add("tab");
         ul.appendChild(li);
     });
-
     
     const div = document.getElementById("cat_content");   
     var div1 = document.createElement('div');
 
     div1.setAttribute("id", "all");
-    div1.setAttribute("data-tab-target", "");
+    div1.setAttribute("data-tab-content", "");
     div1.classList.add("active");
     div.appendChild(div1);
     var divactive = document.createElement('div');
@@ -61,7 +60,7 @@ axios.get('http://localhost:8081/film_catergories',{
             productDetail.className = 'product-detail';
     
             const productTitle = document.createElement('div');
-            productTitle.className = 'product-title display-6';
+            productTitle.className = 'product-title';
     
             const productTitleLink = document.createElement('p');
             productTitleLink.href = "#";
@@ -73,7 +72,7 @@ axios.get('http://localhost:8081/film_catergories',{
             itemRating.className = 'item-price';
 
             const itemRatingLink = document.createElement('p');
-            itemRating.className = 'text-primary display-6';
+            itemRating.className = 'text-primary';
             itemRatingLink.innerHTML = film.rating
 
             itemRating.appendChild(itemRatingLink);
@@ -92,21 +91,10 @@ axios.get('http://localhost:8081/film_catergories',{
         })
     });
 
-
-
-
-
-
-
-
-
-
-
-
     cat_list.map((cat, i)=> {
         var div1 = document.createElement('div');
         div1.setAttribute("id", cat.name.toLowerCase());
-        div1.setAttribute("data-tab-target", "");
+        div1.setAttribute("data-tab-content", "");
         div.appendChild(div1);
     
         var getlink = `http://localhost:8081/film_categories/${i+1}/films`
@@ -137,43 +125,71 @@ axios.get('http://localhost:8081/film_catergories',{
             const productDetail = document.createElement('div');
             productDetail.className = 'product-detail';
     
-            const productTitle = document.createElement('h3');
+            const productTitle = document.createElement('div');
             productTitle.className = 'product-title';
     
-            const productTitleLink = document.createElement('a');
+            const productTitleLink = document.createElement('p');
             productTitleLink.href = "#";
             productTitleLink.innerHTML = film.title
     
             productTitle.appendChild(productTitleLink);
     
             const itemRating = document.createElement('div');
-            itemRating.className = 'item-price text-primary';
-            itemRating.innerHTML = film.rating;
+            itemRating.className = 'item-price';
+
+            const itemRatingLink = document.createElement('p');
+            itemRating.className = 'text-primary';
+            itemRatingLink.innerHTML = film.rating
+
+            itemRating.appendChild(itemRatingLink);
     
             productDetail.appendChild(productTitle);
             productDetail.appendChild(itemRating);
     
             newDiv.appendChild(imageHolder);
             newDiv.appendChild(productDetail);
-            divactive.append(newDiv)       
+            divactive.append(newDiv);      
         })
-        div1.appendChild(divactive)
+        div1.appendChild(divactive);
         })
         .catch(error => {        
-            console.log(error)
+            console.log(error);
         })
     });
-    
-
-    console.log(div)
-
-  
 })
-
 .catch(error => {        
-        alert("Error in connecting to the server!!!!!!!");
-        console.log(error)
+    alert("Error in connecting to the server");
+    console.log(error)
 })
+
+
+$("#update_user_details").onload(function (k) {
+
+$.ready(function() {
+    console.log("runin")
+    const tabs = document.querySelectorAll('[data-tab-target]')
+    console.log(tabs)
+    const tabContents = document.querySelectorAll('[data-tab-content]')
+
+    tabs.forEach(tab => {
+      console.log("2")
+      tab.addEventListener('click', () => {
+        console.log("3")
+        const target = document.querySelector(tab.dataset.tabTarget)
+        tabContents.forEach(tabContent => {
+          tabContent.classList.remove('active')
+        })
+        tabs.forEach(tab => {
+          tab.classList.remove('active')
+        })
+        tab.classList.add('active')
+        target.classList.add('active')
+      })
+    });
+
+})
+
+
 
 
 

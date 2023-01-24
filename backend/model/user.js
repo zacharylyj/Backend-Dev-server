@@ -93,7 +93,7 @@ var user = {
             if (err) {
                 return callback(err, null);
             } else {
-                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =?";
+                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? limit 1";
                 dbConn.query(sql, [customer_id], function (err, results) {
                     dbConn.end();
                     if (err) {

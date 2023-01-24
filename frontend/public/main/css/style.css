@@ -84,7 +84,6 @@ CSS STRUCTURE:
 /** 1. VARIABLES
 --------------------------------------------------------------*/
 
-
 :root {
   /* widths for rows and containers
      */
@@ -321,7 +320,8 @@ p {
   font-family: var(--body-font);
   font-size: 16px;
   line-height: 1.8;
-  margin: 0 0 20px 0;
+  padding-left: 5px;
+  margin: 0 0 0 0;
 }
 p.dark {
   color: var(--dark-color);
@@ -1755,7 +1755,6 @@ blockquote cite {
   border: 1px solid var(--grey-color);
   padding: 5px;
   cursor: pointer;
-  margin-bottom: 10px;
   width: 100%;
 }
 .product-item .cart-concern {
