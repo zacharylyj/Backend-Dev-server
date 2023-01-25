@@ -1,3 +1,5 @@
+
+
 axios.get('http://localhost:8081/film_catergories',{
     headers: {
         authorization: `Bearer ${localStorage.getItem('JWT')}`
@@ -44,7 +46,7 @@ axios.get('http://localhost:8081/film_catergories',{
         var film_list = response.data;
         film_list.map(film => {
             const newDiv = document.createElement('div')
-            newDiv.classList.add("product-item", "col-lg-1", "col-md-2", "col-sm-2")
+            newDiv.classList.add("product-item", "col-lg-2", "col-md-2", "col-sm-3")
     
             const imageHolder = document.createElement('a');
             imageHolder.className = 'image-holder';
@@ -52,7 +54,8 @@ axios.get('http://localhost:8081/film_catergories',{
             imageHolder.href = `film_detail.html?film_id=${film.film_id}`;
             
             const img = document.createElement('img');
-            img.src = "images/selling-products6.jpg";
+            var imgsrc = "https://source.unsplash.com/1080x1350/?"+Math.floor(Math.random() * 1000)
+            img.src = imgsrc;
             img.alt = "Film";
             img.className = "product-image";
     
@@ -112,7 +115,7 @@ axios.get('http://localhost:8081/film_catergories',{
     
         film_list.map(film => {
             const newDiv = document.createElement('div')
-            newDiv.classList.add("product-item", "col-lg-1", "col-md-2", "col-sm-2")
+            newDiv.classList.add("product-item", "col-lg-2", "col-md-2", "col-sm-3")
     
             const imageHolder = document.createElement('a');
             imageHolder.className = 'image-holder';
@@ -120,7 +123,9 @@ axios.get('http://localhost:8081/film_catergories',{
 
     
             const img = document.createElement('img');
-            img.src = "images/selling-products6.jpg";
+            var imgsrc = "https://source.unsplash.com/1080x1350/?"+Math.floor(Math.random() * 1000)
+            console.log(imgsrc)
+            img.src = imgsrc;
             img.alt = "Film";
             img.className = "product-image";
     
@@ -193,13 +198,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 console.log("runing1")
 $(document).ready(function() {
-    $('.tab').on('click', function() {
+    $(document).on('click', '.tab',function() {
         console.log("click")
         $('.tab').removeClass('active');
         $(this).addClass('active');
-        $('.product-item').hide();
+
         var target = $(this).data('tab-target');
-        $(target).show();
+        $('.active').removeClass('active');
+        $(target).addClass('active');
     });
 });
 

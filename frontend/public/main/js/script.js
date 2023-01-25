@@ -1,3 +1,8 @@
+$("#update_user_details").submit(function (k) {
+  k.preventDefault();
+
+})
+
 (function($) {
 
   "use strict";

@@ -1944,7 +1944,7 @@ i.icon.icon-arrow-io {
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  margin: 0px 10px 40px;
+  margin: 0px 10px 80px;
 }
 .tabs .tab {
   font-weight: 600;

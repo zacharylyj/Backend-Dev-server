@@ -85,7 +85,7 @@ app.get('/film_catergories', verificationLib.verifyToken, function (req, res) {
 });
 //////////////////////////////////////////////////////////////////////////
 //UPDATE staff endpoint
-app.put('/staff/:id', function (req, res) {
+app.put('/staff/:id', verificationLib.verifyToken, function (req, res) {
     var staff_id = req.params.id;
 
     userDB.updateStaff(req.body, staff_id, function (err, results) {
@@ -111,7 +111,7 @@ app.put('/staff/:id', function (req, res) {
 });
 //////////////////////////////////////////////////////////////////////////
 //get flim title thingy
-app.get("/film_categories/:category_id/films", function (req, res) {
+app.get("/film_categories/:category_id/films", verificationLib.verifyToken, function (req, res) {
     const category_id = req.params.category_id;
     userDB.filmcard(category_id, function (err, result) {
         if (err) {
@@ -126,7 +126,7 @@ app.get("/film_categories/:category_id/films", function (req, res) {
 });
 //////////////////////////////////////////////////////////////////////////
 //get flim cat
-app.get('/flim_content/:film_id', function (req, res) {
+app.get('/flim_content/:film_id', verificationLib.verifyToken, function (req, res) {
     const film_id = req.params.film_id;
     userDB.getFlim_content(film_id, function (err, results) {
         if (err) {
@@ -143,12 +143,31 @@ app.get('/flim_content/:film_id', function (req, res) {
     });
 });
 //////////////////////////////////////////////////////////////////////////
+//search
+app.get('/film_search', function (req, res) {
+    var searchStr = req.body.searchStr;
+    console.log(searchStr)
+    userDB.getSearch(searchStr, function (err, results) {
+        if (err) {
+            console.log(err);  
+            res.status(500);
+            res.type('application/json');
+            res.send(`{"error_msg":"Internal server error"}`);
+
+        } else {
+            res.status(200);
+            res.type('application/json');
+            res.send(results);
+        }
+    });
+});
+//////////////////////////////////////////////////////////////////////////
 //1st endpoint
 app.get('/actors/:id', verificationLib.verifyToken, function (req, res) {
     var actor_id = req.params.id;
     userDB.getActor(actor_id, function (err, results) {
         if (err) {
-            console.log(err);
+            console.log(err);  
             res.status(500);
             res.type('application/json');
             res.send(`{"error_msg":"Internal server error"}`);

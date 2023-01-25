@@ -107,7 +107,7 @@ var user = {
         });
     },
     //////////////////////////////////////////////////////////////////////////
-    //flim endpoint
+    //get flim cat
     getFlim_content: function (film_id, callback) {
         var dbConn = dbConfig.getConnection();
         dbConn.connect(function (err) {
@@ -117,6 +117,24 @@ var user = {
             else {
                 var sql = "select f.film_id, f.title, c.name, f.release_year, f.description, f.rating, a.first_name, a.last_name from film as f  inner join film_category as fc on f.film_id = fc.film_id inner join category as c on fc.category_id = c.category_id inner join film_actor as fa on f.film_id = fa.film_id inner join actor as a on fa.actor_id = a.actor_id where f.film_id=?";
                 dbConn.query(sql, [film_id],function (err, results) {
+                    dbConn.end();
+                    return callback(err, results);
+                });
+            }
+        });
+    },
+    //////////////////////////////////////////////////////////////////////////
+    //search
+    getSearch: function (searchStr, callback) {
+        var dbConn = dbConfig.getConnection();
+
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+                var sql = `select * from film where title like '%${searchStr}%'`;
+                dbConn.query(sql, function (err, results) {
                     dbConn.end();
                     return callback(err, results);
                 });
