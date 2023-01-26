@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
     }
 });
 
-app.use(serveStatic(__dirname + "/public/main", { 'index': ['login.html'] }));
+app.use(serveStatic(__dirname + "/public/main", { 'index': ['login_staff.html'] }));
 
 
 app.listen(port, hostname, function () {

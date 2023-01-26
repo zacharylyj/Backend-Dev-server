@@ -1,5 +1,3 @@
-
-
 axios.get('http://localhost:8081/film_catergories',{
     headers: {
         authorization: `Bearer ${localStorage.getItem('JWT')}`
@@ -8,7 +6,7 @@ axios.get('http://localhost:8081/film_catergories',{
 .then(response => {
     var cat_list = response.data
 
-    const ul = document.getElementById("cat_header");   
+    const ul = document.getElementById("cat_header");  
     var li = document.createElement('li');
     li.innerText = "All";
     li.setAttribute("data-tab-target", "#all");
@@ -78,7 +76,7 @@ axios.get('http://localhost:8081/film_catergories',{
 
             const itemRatingLink = document.createElement('p');
             itemRating.className = 'text-primary';
-            itemRatingLink.innerHTML = film.rating
+            itemRatingLink.innerHTML = `$${film.rental_rate}`
 
             itemRating.appendChild(itemRatingLink);
     
@@ -124,7 +122,6 @@ axios.get('http://localhost:8081/film_catergories',{
     
             const img = document.createElement('img');
             var imgsrc = "https://source.unsplash.com/1080x1350/?"+Math.floor(Math.random() * 1000)
-            console.log(imgsrc)
             img.src = imgsrc;
             img.alt = "Film";
             img.className = "product-image";
@@ -148,7 +145,7 @@ axios.get('http://localhost:8081/film_catergories',{
 
             const itemRatingLink = document.createElement('p');
             itemRating.className = 'text-primary';
-            itemRatingLink.innerHTML = film.rating
+            itemRatingLink.innerHTML = `$${film.rental_rate}`
 
             itemRating.appendChild(itemRatingLink);
     
@@ -196,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-console.log("runing1")
+
 $(document).ready(function() {
     $(document).on('click', '.tab',function() {
         console.log("click")

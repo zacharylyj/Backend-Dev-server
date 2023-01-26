@@ -93,7 +93,7 @@ var user = {
             if (err) {
                 return callback(err, null);
             } else {
-                var sql = "select f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? limit 2";
+                var sql = "select f.rental_rate, f.film_id, f.title, fc.category_id, f.rating, f.release_year, f.length as duration FROM film as f INNER JOIN film_category as fc ON f.film_id = fc.film_id INNER JOIN category as c ON fc.category_id = c.category_id where c.category_id =? limit 1";
                 dbConn.query(sql, [cat_id], function (err, results) {
                     dbConn.end();
                     if (err) {
@@ -133,14 +133,16 @@ var user = {
                 return callback(err, null);
             }
             else {
-                var sql = `select * from film where title like '%${searchStr}%'`;
+                var sql = `select * from film where title like '%${searchStr}%' limit 10`;
                 dbConn.query(sql, function (err, results) {
                     dbConn.end();
                     return callback(err, results);
                 });
             }
         });
-    },
+    },  
+
+    
 
     //////////////////////////////////////////////////////////////////////////
     //1st endpoint
