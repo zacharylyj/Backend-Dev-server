@@ -161,6 +161,79 @@ app.get('/film_search', function (req, res) {
     });
 });
 //////////////////////////////////////////////////////////////////////////
+//8th endpoint
+app.post('/customers', function (req, res) {
+    if (req.body.address2 == undefined) {
+        var address2 = null;
+    }
+    else {
+        address2 = req.body.address.address_line2;
+    }
+    if (req.body.store_id == null ||
+        req.body.first_name == null ||
+        req.body.last_name == null ||
+        req.body.email == null ||
+        req.body.address.address_line1 == null ||
+        req.body.address.district == null ||
+        req.body.address.city_id == null ||
+        req.body.address.postal_code == null ||
+        req.body.address.phone == null
+    ) {
+        res.status(400);
+        res.type('application/json');
+        res.send(`{"error_msg":"missing data"}`);
+    }
+    addressList = [req.body.address.address_line1, address2, req.body.address.district, req.body.address.city_id, req.body.address.postal_code, req.body.address.phone];
+    userDB.addCustomer(
+        req.body.store_id,
+        req.body.first_name,
+        req.body.last_name,
+        req.body.email,
+        addressList,
+        function (err, results) {
+            if (err) {
+                if (err.code === 'ER_DUP_ENTRY') {
+                    res.status(409);
+                    res.type('application/json');
+                    res.send(`{"error_msg":"data already exists"}`);
+                } else {
+                    res.status(500);
+                    res.type('application/json');
+                    res.send(`{"error_msg":"Internal server error"}`);
+                }
+            }
+            else {
+                res.status(201);
+                res.type('application/json');
+                res.send(`{"customer_id": "${results.insertId}"}`);
+            }
+        });
+});
+
+//////////////////////////////////////////////////////////////////////////
+//3rd endpoint
+app.post('/actors', function (req, res) {
+
+    if (req.body.first_name == null || req.body.last_name == null) {
+        res.status(400);
+        res.type('application/json');
+        res.send(`{"error_msg":"missing data"}`);
+    }
+    userDB.addActor(req.body, function (err, results) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+            res.type('application/json');
+            res.send(`{"error_msg":"Internal server error"}`);
+        }
+        else {
+            res.status(201);
+            res.type('application/json');
+            res.send(`{"actor_id": "${results.insertId}"}`);
+        }
+    });
+});
+//////////////////////////////////////////////////////////////////////////
 //1st endpoint
 app.get('/actors/:id', verificationLib.verifyToken, function (req, res) {
     var actor_id = req.params.id;
@@ -215,29 +288,7 @@ app.get('/actors', function (req, res) {
         }
     });
 });
-//////////////////////////////////////////////////////////////////////////
-//3rd endpoint
-app.post('/actors', function (req, res) {
 
-    if (req.body.first_name == null || req.body.last_name == null) {
-        res.status(400);
-        res.type('application/json');
-        res.send(`{"error_msg":"missing data"}`);
-    }
-    userDB.addActor(req.body, function (err, results) {
-        if (err) {
-            console.log(err);
-            res.status(500);
-            res.type('application/json');
-            res.send(`{"error_msg":"Internal server error"}`);
-        }
-        else {
-            res.status(201);
-            res.type('application/json');
-            res.send(`{"actor_id": "${results.insertId}"}`);
-        }
-    });
-});
 //////////////////////////////////////////////////////////////////////////
 //4th endpoint
 app.put('/actors/:id', function (req, res) {
@@ -317,55 +368,7 @@ app.get("/customer/:customer_id/payment", function (req, res) {
     });
 });
 
-//////////////////////////////////////////////////////////////////////////
-//8th endpoint
-app.post('/customers', function (req, res) {
-    if (req.body.address2 == undefined) {
-        var address2 = null;
-    }
-    else {
-        address2 = req.body.address.address_line2;
-    }
-    if (req.body.store_id == null ||
-        req.body.first_name == null ||
-        req.body.last_name == null ||
-        req.body.email == null ||
-        req.body.address.address_line1 == null ||
-        req.body.address.district == null ||
-        req.body.address.city_id == null ||
-        req.body.address.postal_code == null ||
-        req.body.address.phone == null
-    ) {
-        res.status(400);
-        res.type('application/json');
-        res.send(`{"error_msg":"missing data"}`);
-    }
-    addressList = [req.body.address.address_line1, address2, req.body.address.district, req.body.address.city_id, req.body.address.postal_code, req.body.address.phone];
-    userDB.addCustomer(
-        req.body.store_id,
-        req.body.first_name,
-        req.body.last_name,
-        req.body.email,
-        addressList,
-        function (err, results) {
-            if (err) {
-                if (err.code === 'ER_DUP_ENTRY') {
-                    res.status(409);
-                    res.type('application/json');
-                    res.send(`{"error_msg":"data already exists"}`);
-                } else {
-                    res.status(500);
-                    res.type('application/json');
-                    res.send(`{"error_msg":"Internal server error"}`);
-                }
-            }
-            else {
-                res.status(201);
-                res.type('application/json');
-                res.send(`{"customer_id": "${results.insertId}"}`);
-            }
-        });
-});
+
 
 //////////////////////////////////////////////////////////////////////////
 //9th endpoint

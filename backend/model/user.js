@@ -142,6 +142,60 @@ var user = {
         });
     },  
 
+    //////////////////////////////////////////////////////////////////////////
+    //8th endpoint
+    addCustomer: function (store_id, first_name, last_name, email, addressList, callback) {
+        var dbConn = dbConfig.getConnection();
+        var [address, address2, district, city_id, postal_code, phone] = addressList;
+        dbConn.connect(function (err) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            }
+            else {
+                let sql = `insert into address (address, address2, district, city_id, postal_code, phone) VALUES (?,?,?,?,?,?)`;
+                dbConn.query(sql, [address, address2, district, city_id, postal_code, phone], function (err, results) {
+                    if (err) {
+                        console.log(err);
+                        return callback(err, null);
+                    }
+                    let sql1 = `insert into customer (store_id, first_name, last_name, email, address_id) VALUES (?,?,?,?,?)`;
+                    let address_id = results.insertId;
+                    dbConn.query(sql1, [store_id, first_name, last_name, email, address_id], function (err, results) {
+                        dbConn.end();
+                        if (err) {
+                            console.log(err);
+                            return callback(err, null);
+                        }
+                        console.log(results);
+                        return callback(null, results);
+                    });
+                });
+            }
+        });
+    },
+    
+    //////////////////////////////////////////////////////////////////////////
+    //3rd endpoint
+    addActor: function (object, callback) {
+        var dbConn = dbConfig.getConnection();
+        var { first_name, last_name } = object;
+        dbConn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+                var sql = "insert into actor(first_name, last_name) Values(?,?)";
+                dbConn.query(sql, [first_name, last_name], function (err, results) {
+
+                    dbConn.end();
+                    return callback(err, results);
+
+
+                });
+            }
+        });
+    },
     
 
     //////////////////////////////////////////////////////////////////////////
@@ -181,27 +235,7 @@ var user = {
             }
         });
     },
-    //////////////////////////////////////////////////////////////////////////
-    //3rd endpoint
-    addActor: function (object, callback) {
-        var dbConn = dbConfig.getConnection();
-        var { first_name, last_name } = object;
-        dbConn.connect(function (err) {
-            if (err) {
-                return callback(err, null);
-            }
-            else {
-                var sql = "insert into actor(first_name, last_name) Values(?,?)";
-                dbConn.query(sql, [first_name, last_name], function (err, results) {
 
-                    dbConn.end();
-                    return callback(err, results);
-
-
-                });
-            }
-        });
-    },
     //////////////////////////////////////////////////////////////////////////
     //4th endpoint
     updateActor: function (object, actor_id, callback) {
@@ -280,39 +314,6 @@ var user = {
                     }
                     console.log(results);
                     return callback(null, results);
-                });
-            }
-        });
-    },
-
-    //////////////////////////////////////////////////////////////////////////
-    //8th endpoint
-    addCustomer: function (store_id, first_name, last_name, email, addressList, callback) {
-        var dbConn = dbConfig.getConnection();
-        var [address, address2, district, city_id, postal_code, phone] = addressList;
-        dbConn.connect(function (err) {
-            if (err) {
-                console.log(err);
-                return callback(err, null);
-            }
-            else {
-                let sql = `insert into address (address, address2, district, city_id, postal_code, phone) VALUES (?,?,?,?,?,?)`;
-                dbConn.query(sql, [address, address2, district, city_id, postal_code, phone], function (err, results) {
-                    if (err) {
-                        console.log(err);
-                        return callback(err, null);
-                    }
-                    let sql1 = `insert into customer (store_id, first_name, last_name, email, address_id) VALUES (?,?,?,?,?)`;
-                    let address_id = results.insertId;
-                    dbConn.query(sql1, [store_id, first_name, last_name, email, address_id], function (err, results) {
-                        dbConn.end();
-                        if (err) {
-                            console.log(err);
-                            return callback(err, null);
-                        }
-                        console.log(results);
-                        return callback(null, results);
-                    });
                 });
             }
         });

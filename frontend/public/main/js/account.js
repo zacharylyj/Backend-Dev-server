@@ -68,3 +68,76 @@ $("#update_user_details").submit(function (k) {
         }
     }
 })
+
+$("#addcustomer").submit(function (k) {
+    k.preventDefault();
+    var add2 = ""
+    if ($("#add2").val() != undefined){
+        add2 = $("#add2").val()
+    }
+    const req = {
+        "store_id": $("#store-id").val(),
+        "first_name": $("#account-fn").val(),
+        "last_name": $("#account-ln").val(),
+        "email": $("#account-email").val(),
+        "address": {
+            "address_line1": $("#add1").val(),
+            "address_line2": add2,
+            "district": $("#district").val(),
+            "city_id": $("#city-id").val(),
+            "postal_code": $("#postal").val(),
+            "phone": $("#phone").val()
+        }
+    }
+    console.log(req)
+    axios.post('http://localhost:8081/customers', req)
+    .then(response => {
+        console.log(response.data)
+        alert(`New Customer Added id: ${response.data.customer_id}`)
+        window.location.href = '/account.html'
+        
+
+    })
+    .catch(error => {
+        if (error.response.status === 409)
+        alert("Email is already being used")
+        else{            
+            alert("Error in connecting to the server");
+            console.log(error)
+        }
+    })
+})
+
+$("#addactor").submit(function (k) {
+    k.preventDefault();
+    if(
+        $("#account-fn").val() == undefined ||
+        $("#account-ln").val() == undefined
+    ){
+        alert(`Missing Data`)
+    }
+    else{
+        const req = {first_name: $("#account-fn").val(), last_name: $("#account-ln").val()}
+        console.log(req)
+        axios.post('http://localhost:8081/actors', req)
+        .then(response => {
+            console.log(response.data)
+            alert(`New Actor Added id: ${response.data.actor_id}`)
+            window.location.href = '/account.html'
+
+        })
+        .catch(error => {
+            if (error.response.status === 403){
+                alert("Email or Password is incorrect");
+            }
+            else{            
+                alert("Error in connecting to the server");
+                console.log(error)
+            }
+        })
+    }
+})
+
+
+
+
