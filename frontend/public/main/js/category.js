@@ -169,31 +169,6 @@ axios.get('http://localhost:8081/film_catergories',{
     console.log(error)
 })
 
-document.addEventListener("DOMContentLoaded", function() {
-    var tabs = document.querySelectorAll(".tab");
-    for (var i = 0; i < tabs.length; i++) {
-        tabs[i].addEventListener("click", function() {
-            // remove active class from all tabs
-            for (var j = 0; j < tabs.length; j++) {
-                tabs[j].classList.remove("active");
-            }
-            // add active class to the clicked tab
-            this.classList.add("active");
-            // hide all product-item elements
-            var productItems = document.querySelectorAll(".product-item");
-            for (var k = 0; k < productItems.length; k++) {
-                productItems[k].style.display = "none";
-            }
-            // show the elements associated with the currently active tab
-            var target = this.getAttribute("data-tab-target");
-            var activeProductItems = document.querySelectorAll(target);
-            for (var l = 0; l < activeProductItems.length; l++) {
-                activeProductItems[l].style.display = "block";
-            }
-        });
-    }
-});
-
 $(document).ready(function() {
     $(document).on('click', '.tab',function() {
         console.log("click")

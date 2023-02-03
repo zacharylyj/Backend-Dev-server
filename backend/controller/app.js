@@ -26,13 +26,13 @@ app.post('/staff', function (req, res) {
 
     userDB.loginStaff(email, password, function (err, results) {
         console.log(err)
-        if (err) { 
+        if (err) {
             if (err.message === 'not found') {
                 res.status(403);
                 res.type('application/json');
                 res.send(`{"incorrect_data":"Email or Password is incorrect"}`);
             }
-            else { 
+            else {
                 res.status(500);
                 res.type('application/json');
                 res.send(`{"error_msg":"Internal server error"}`);
@@ -41,7 +41,7 @@ app.post('/staff', function (req, res) {
         else {
             if (results[0] !== undefined) {
                 console.log("Fetching key and payload");
-                var payload = {"staff_id": results[0].staff_id, "first_name": results[0].first_name, "last_name": results[0].last_name, "address_id": results[0].address_id, "email": results[0].email, "store_id": results[0].store_id, "username": results[0].username, "password": results[0].password, "last_update": results[0].last_update};
+                var payload = { "staff_id": results[0].staff_id, "first_name": results[0].first_name, "last_name": results[0].last_name, "address_id": results[0].address_id, "email": results[0].email, "store_id": results[0].store_id, "username": results[0].username, "password": results[0].password, "last_update": results[0].last_update };
 
                 jwt.sign(payload, config.secretKey, { expiresIn: 86400 }, function (err, jwtKey) {
                     var message = { "JWT": jwtKey, "payload": payload }
@@ -148,7 +148,7 @@ app.get('/film_search', function (req, res) {
     var searchStr = req.query.searchStr;
     userDB.getSearch(searchStr, function (err, results) {
         if (err) {
-            console.log(err);  
+            console.log(err);
             res.status(500);
             res.type('application/json');
             res.send(`{"error_msg":"Internal server error"}`);
@@ -239,7 +239,7 @@ app.get('/actors/:id', verificationLib.verifyToken, function (req, res) {
     var actor_id = req.params.id;
     userDB.getActor(actor_id, function (err, results) {
         if (err) {
-            console.log(err);  
+            console.log(err);
             res.status(500);
             res.type('application/json');
             res.send(`{"error_msg":"Internal server error"}`);
