@@ -88,21 +88,19 @@ $("#addcustomer").submit(function (k) {
                 "city_id": $("#city-id").val(),
                 "postal_code": $("#postal").val(),
                 "phone": $("#phone").val()
-            },
-            headers: {
+            }
+        },
+        headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('JWT')}`,
             }
-        }
+        
     }
-    console.log(req)
     axios.post('http://localhost:8081/customers', config1.data, { headers: config1.headers })
         .then(response => {
             console.log(response.data)
             alert(`New Customer Added id: ${response.data.customer_id}`)
             window.location.href = '/account.html'
-
-
         })
         .catch(error => {
             if (error.response.status === 409)
