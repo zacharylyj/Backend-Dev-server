@@ -144,7 +144,7 @@ app.get('/flim_content/:film_id', verificationLib.verifyToken, function (req, re
 });
 //////////////////////////////////////////////////////////////////////////
 //search
-app.get('/film_search', verificationLib.verifyToken, function (req, res) {
+app.get('/film_search', function (req, res) {
     var searchStr = req.query.searchStr
     var sliderprice = req.query.sliderprice;
     object = { searchStr, sliderprice }

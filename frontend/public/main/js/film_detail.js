@@ -57,3 +57,12 @@ axios.get(getlink, {
         document.getElementById("addHtml").innerHTML += insertHTML
 
     })
+    .catch(error => {
+        console.log(error)
+        if (error.response.status === 404) {
+            insertHTML = `<h1 class= text-center>404 Not Found</h1>
+            `
+            document.getElementById("addHtml").innerHTML += insertHTML
+
+        }
+    })

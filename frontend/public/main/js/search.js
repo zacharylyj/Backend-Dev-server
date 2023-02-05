@@ -4,6 +4,7 @@ $("#search-form").submit(function (k) {
     const sliderprice = $("#sliderprice").val();
     console.log(searchStr)
     console.log(sliderprice)
+
     const header = { authorization: `Bearer ${localStorage.getItem('JWT')}` }
     const req = {
         params: {
