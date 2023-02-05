@@ -11,9 +11,7 @@ axios.get(getlink, {
         authorization: `Bearer ${localStorage.getItem('JWT')}`
     }
 })
-
     .then(response => {
-
         function h2tag(first_name, last_name) {
             return `<h2 class="my-3 text-secondary">${first_name} ${last_name}</h2>`
         }
