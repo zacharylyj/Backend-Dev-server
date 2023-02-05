@@ -1,396 +1,246 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>SoupFlims</title>
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="format-detection" content="telephone=no" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="author" content="" />
-      <meta name="keywords" content="" />
-      <meta name="description" content="" />
-      <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-      <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css" />
-      <link rel="stylesheet" type="text/css" href="css/vendor.css" />
-      <link rel="stylesheet" type="text/css" href="css/style.css" />
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"
-        integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-      ></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SoupFlims</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css" />
+    <link rel="stylesheet" type="text/css" href="css/vendor.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"
+      integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 
-      <script src="js/modernizr.js"></script>
-    </head>
-    <body>
-      <script src="js/category.js" async></script>
-      <div class="search-box">
-        <div class="search-wrap">
-          <div class="close-button">
-            <i class="icon icon-close"></i>
-          </div>
-          <form id="search-form" class="text-center" action="" method="">
-            <input type="text" class="search-input" placeholder="Search..." id ="searchStr"/>
+    <script src="js/modernizr.js"></script>
+    <script>
+      window.onload = function () {
+        const slider = document.getElementById('sliderprice');
+        const value = document.getElementById('sliderValue');
+
+        value.innerHTML = slider.value;
+
+        slider.oninput = function () {
+          value.innerHTML = `$${this.value}`;
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <script src="js/category.js" async></script>
+    <div class="search-box">
+      <div class="search-wrap">
+        <div class="close-button">
+          <i class="icon icon-close"></i>
+        </div>
+        <form id="search-form" class="text-center" action="" method="">
+          <div class="col-lg-7 text-right">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search..."
+              id="searchStr"
+            />
             <i class="icon icon-search"></i>
-          </form>
-        </div>
+          </div>
+
+          <div class="col-lg-2 pt-4">
+            <input
+              type="range"
+              min="0.99"
+              max="11.99"
+              value="$11.9"
+              class="slider"
+              id="sliderprice"
+            />
+            <p id="value">Min Price: <span id="sliderValue"></span></p>
+          </div>
+          <input class="col-lg-2 pt-4" type="submit" value="Submit" />
+        </form>
       </div>
-      <header id="header">
-        <div id="header-wrap">
-          <nav class="secondary-nav border-bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4 col-sm-12"></div>
-                <div class="col-md-4 col-sm-6"></div>
-                <div class="col-md-4 col-sm-6">
-                  <div class="user-items">
-                    <ul class="d-flex justify-content-end list-unstyled">
-                      <li>
-                        <a href="account.html">
-                          <i class="icon icon-user"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="cart.html">
-                          <i class="icon icon-clipboard"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#like">
-                          <i class="icon icon-heart"></i>
-                        </a>
-                      </li>
-                      <li class="user-items">
-                        <i class="icon icon-search"></i>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-          <nav class="primary-nav padding-small">
-            <div class="container">
-              <div class="row d-flex">
-                <div class="col-lg-2 col-md-2">
-                  <div class="main-logo">
-                    <a href="index.html">
-                      <img src="images/main-logo.png" alt="logo" />
-                    </a>
-                  </div>
-                </div>
-                <div class="col-lg-10 col-md-10">
-                  <div class="navbar">
-                    <div class="main-menu stellarnav">
-                      <ul class="menu-list list-unstyled">
-                        <li class="menu-item active">
-                          <a href="account.html" data-effect="profile">Profile</a>
-                        </li>
-                        <li class="menu-item">
-                          <a href="#search" class="item-anchor" data-effect="search"
-                            >Search</a
-                          >
-                        </li>
-                        <li class="menu-item">
-                          <a href="#featured-products" class="item-anchor" data-effect="featured"
-                            >Featured Flims</a
-                          >
-                        </li>
-                        <li class="menu-item">
-                          <a
-                            href="#flim_catalogue"
-                            class="item-anchor"
-                            data-effect="catalogue"
-                            >Catalogue</a
-                          >
-                        </li>
-                        <li class="menu-item">
-                          <a
-                            href="#footer"
-                            class="item-anchor"
-                            data-effect="details"
-                            >More Details</a
-                          >
-                        </li>
-                        <li class="menu-item">
-                          <a
-                            href="#footer"
-                            class="item-anchor"
-                            data-effect="socials"
-                            >Socials Links</a
-                          >
-                        </li>
-                      </ul>
-                      <div class="hamburger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </header>
-      <section id="billboard" class="overflow-hidden">
-        <div
-          class="button-container d-flex justify-content-between align-items-center"
-        >
-          <button class="button-prev">
-            <i class="icon icon-chevron-left"></i>
-          </button>
-          <button class="button-next">
-            <i class="icon icon-chevron-right"></i>
-          </button>
-        </div>
-        <div class="swiper main-swiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              style="
-                background-image: url('images/banner1.jpg');
-                background-repeat: no-repeat;
-                background-size: cover;
-              "
-            >
-              <div class="banner-content">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h2 class="banner-title">Movie Collection</h2>
-                      <p>Providing the latest 2023 movies ready for rental!</p>
-                      <div class="btn-wrap">
-                        <a
-                          href="#"
-                          class="btn btn-light btn-medium d-flex align-items-center"
-                          tabindex="0"
-                          >Shop it now <i class="icon icon-arrow-io"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="swiper-slide"
-              style="
-                background-image: url('images/banner1.jpg');
-                background-repeat: no-repeat;
-                background-size: cover;
-              "
-            >
-              <div class="banner-content">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h2 class="banner-title">Winter Collection</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed eu feugiat amet, libero ipsum enim pharetra hac.
-                      </p>
-                      <div class="btn-wrap">
-                        <a
-                          href="#"
-                          class="btn btn-light btn-light-arrow btn-medium d-flex align-items-center"
-                          tabindex="0"
-                          >Shop it now <i class="icon icon-arrow-io"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+    </div>
+    <header id="header">
+      <div id="header-wrap">
+        <nav class="secondary-nav border-bottom">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12"></div>
+              <div class="col-md-4 col-sm-6"></div>
+              <div class="col-md-4 col-sm-6">
+                <div class="user-items">
+                  <ul class="d-flex justify-content-end list-unstyled">
+                    <li>
+                      <a href="account.html">
+                        <i class="icon icon-user"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="cart.html">
+                        <i class="icon icon-clipboard"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#like">
+                        <i class="icon icon-heart"></i>
+                      </a>
+                    </li>
+                    <li class="user-items">
+                      <i class="icon icon-search"></i>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="swiper-pagination"></div>
-      </section>
-      <section
-        id="flim_catalogue"
-        class="product-store bg-light-grey padding-small"
-      >
-        <div class="container">
-          <div class="row">
-            <div class="section-header">
-              <h2 class="section-title">Flims for Rental</h2>
-            </div>
-            <ul class="tabs list-unstyled pb-5" id="cat_header"></ul>
-            <br>
-            <div class="tab-content" id="cat_content"></div>
-          </div>
-        </div>
-      </section>
-      <section id="testimonials" class="padding-large no-padding-bottom">
-        <div class="container">
-          <div class="reviews-content">
-            <div class="row d-flex flex-wrap">
-              <div class="col-md-2">
-                <div class="review-icon">
-                  <i class="icon icon-right-quote"></i>
+        </nav>
+        <nav class="primary-nav padding-small">
+          <div class="container">
+            <div class="row d-flex">
+              <div class="col-lg-2 col-md-2">
+                <div class="main-logo">
+                  <a href="index.html">
+                    <img src="images/main-logo.png" alt="logo" />
+                  </a>
                 </div>
               </div>
-              <div class="col-md-8">
-                <div class="swiper testimonial-swiper overflow-hidden">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="testimonial-detail">
-                        <p>
-                          “Soupflims is a hidden gem among movie rental companies. Their selection may be small but it's mighty. They specialize in indie and foreign films and their curation is on point. Every time I visit the store, I discover a new film I absolutely adore. The staff is passionate and friendly, always happy to chat about the latest films and recommend something outside my comfort zone. I highly recommend Soupflims for anyone looking for a more diverse and offbeat selection of movies.”
-                        </p>
-                        <div class="author-detail">
-                          <div class="name">By ShatGpt</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="testimonial-detail">
-                        <p>
-                          “I recently used the services of the movie rental company, SoupFilms, and I have to say, I was thoroughly impressed. The selection of movies available was vast and diverse, with something for everyone. The ordering process was simple and easy to navigate, and the movies arrived promptly and in great condition. The staff was also incredibly helpful and knowledgeable, always willing to answer any questions I had. Overall, I had a fantastic experience with SoupFilms and would highly recommend them to anyone in need of a movie rental service.”
-                        </p>
-                        <div class="author-detail">
-                          <div class="name">By RatGpt</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-arrows">
-                  <button class="prev-button">
-                    <i class="icon icon-arrow-left"></i>
-                  </button>
-                  <button class="next-button">
-                    <i class="icon icon-arrow-right"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="shipping-information">
-        <hr />
-        <div class="container">
-          <div
-            class="row d-flex flex-wrap align-items-center justify-content-between"
-          >
-            <div class="col-md-3 col-sm-6">
-              <div class="icon-box">
-                <i class="icon icon-truck"></i>
-                <h4 class="block-title">
-                  <strong>Free shipping</strong> Over $200
-                </h4>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="icon-box">
-                <i class="icon icon-return"></i>
-                <h4 class="block-title">
-                  <strong>Money back</strong> Return within 7 days
-                </h4>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="icon-box">
-                <i class="icon icon-tags1"></i>
-                <h4 class="block-title">
-                  <strong>Buy 4 get 5th</strong> 50% off
-                </h4>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="icon-box">
-                <i class="icon icon-help_outline"></i>
-                <h4 class="block-title">
-                  <strong>Any questions?</strong> Our experts are always ready
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr />
-      </section>
-      <footer id="footer">
-        <div class="container">
-          <div class="row">
-            <div class="footer-menu-list">
-              <div class="row d-flex flex-wrap justify-content-between">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                  <div class="footer-menu">
-                    <h5 class="widget-title">Our Mission</h5>
-                    <p>
-                      To provide a unique and diverse selection of films for discerning movie enthusiasts. We strive to offer a curated collection films that are often overlooked by mainstream rental companies. Our knowledgeable staff is dedicated to helping customers discover new and exciting films, while fostering a sense of community among film lovers. We believe that every film has the power to inspire, educate and entertain and we're committed to making these films available to our customers.
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                  <div class="footer-menu">
-                    <h5 class="widget-title">Customer Service</h5>
+              <div class="col-lg-10 col-md-10">
+                <div class="navbar">
+                  <div class="main-menu stellarnav">
                     <ul class="menu-list list-unstyled">
-                      <li class="menu-item">
-                        <a href="#">FAQ</a>
+                      <li class="menu-item active">
+                        <a href="account.html" data-effect="profile">Profile</a>
                       </li>
                       <li class="menu-item">
-                        <a href="#">Contact</a>
+                        <a
+                          href="#search"
+                          class="item-anchor"
+                          data-effect="search"
+                          >Search</a
+                        >
                       </li>
                       <li class="menu-item">
-                        <a href="#">Privacy Policy</a>
+                        <a
+                          href="#featured-products"
+                          class="item-anchor"
+                          data-effect="featured"
+                          >Featured Flims</a
+                        >
                       </li>
                       <li class="menu-item">
-                        <a href="#">Returns & Refunds</a>
+                        <a
+                          href="#flim_catalogue"
+                          class="item-anchor"
+                          data-effect="catalogue"
+                          >Catalogue</a
+                        >
                       </li>
                       <li class="menu-item">
-                        <a href="#">Cookie Guidelines</a>
+                        <a
+                          href="#footer"
+                          class="item-anchor"
+                          data-effect="details"
+                          >More Details</a
+                        >
                       </li>
                       <li class="menu-item">
-                        <a href="#">Delivery Information</a>
+                        <a
+                          href="#footer"
+                          class="item-anchor"
+                          data-effect="socials"
+                          >Socials Links</a
+                        >
                       </li>
                     </ul>
+                    <div class="hamburger">
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                  <div class="footer-menu">
-                    <h5 class="widget-title">Contact Us</h5>
-                    <p>
-                      Do you have any questions or suggestions?
-                      <a href="#" class="email">support@soupflim.com</a>
-                    </p>
-                    <p>
-                      Do you need assistance? Give us a call. <br />
-                      <strong>+65 1234 5678</strong>
-                    </p>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <section id="billboard" class="overflow-hidden">
+      <div
+        class="button-container d-flex justify-content-between align-items-center"
+      >
+        <button class="button-prev">
+          <i class="icon icon-chevron-left"></i>
+        </button>
+        <button class="button-next">
+          <i class="icon icon-chevron-right"></i>
+        </button>
+      </div>
+      <div class="swiper main-swiper">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide"
+            style="
+              background-image: url('images/banner1.jpg');
+              background-repeat: no-repeat;
+              background-size: cover;
+            "
+          >
+            <div class="banner-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h2 class="banner-title">Movie Collection</h2>
+                    <p>Providing the latest 2023 movies ready for rental!</p>
+                    <div class="btn-wrap">
+                      <a
+                        href="#flim_catalogue"
+                        class="btn btn-light btn-medium d-flex align-items-center"
+                        tabindex="0"
+                        >Shop it now <i class="icon icon-arrow-io"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                  <div class="footer-menu">
-                    <h5 class="widget-title">SoupFlims</h5>
-                    <p>Find us on our social links!</p>
-                    <div class="social-links">
-                      <ul class="d-flex list-unstyled">
-                        <li>
-                          <a href="#">
-                            <i class="icon icon-facebook"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i class="icon icon-twitter"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i class="icon icon-youtube-play"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i class="icon icon-instagram"></i>
-                          </a>
-                        </li>
-                      </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="swiper-slide"
+            style="
+              background-image: url('images/banner1.jpg');
+              background-repeat: no-repeat;
+              background-size: cover;
+            "
+          >
+            <div class="banner-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h2 class="banner-title">Winter Collection</h2>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed eu feugiat amet, libero ipsum enim pharetra hac.
+                    </p>
+                    <div class="btn-wrap">
+                      <a
+                        href="#"
+                        class="btn btn-light btn-light-arrow btn-medium d-flex align-items-center"
+                        tabindex="0"
+                        >Shop it now <i class="icon icon-arrow-io"></i>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -398,32 +248,250 @@
             </div>
           </div>
         </div>
-        <hr />
-      </footer>
-      <div id="footer-bottom">
-        <div class="container">
-          <div class="row d-flex flex-wrap justify-content-between">
-            <div class="copyright">
-              <p>
-                Freebies by
-                <a href="https://templatesjungle.com/">Templates Jungle</a>
-              </p>
+      </div>
+      <div class="swiper-pagination"></div>
+    </section>
+    <section
+      id="flim_catalogue"
+      class="product-store bg-light-grey padding-small"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="section-header">
+            <h2 class="section-title">Flims for Rental</h2>
+          </div>
+          <ul class="tabs list-unstyled pb-5" id="cat_header"></ul>
+          <br />
+          <div class="tab-content" id="cat_content"></div>
+        </div>
+      </div>
+    </section>
+    <section id="testimonials" class="padding-large no-padding-bottom">
+      <div class="container">
+        <div class="reviews-content">
+          <div class="row d-flex flex-wrap">
+            <div class="col-md-2">
+              <div class="review-icon">
+                <i class="icon icon-right-quote"></i>
+              </div>
             </div>
-            <div class="payment-method">
-              <p>Payment options :</p>
-              <div class="card-wrap">
-                <img src="images/visa-icon.jpg" alt="visa" />
-                <img src="images/mastercard.png" alt="mastercard" />
-                <img src="images/american-express.jpg" alt="american-express" />
+            <div class="col-md-8">
+              <div class="swiper testimonial-swiper overflow-hidden">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="testimonial-detail">
+                      <p>
+                        “Soupflims is a hidden gem among movie rental companies.
+                        Their selection may be small but it's mighty. They
+                        specialize in indie and foreign films and their curation
+                        is on point. Every time I visit the store, I discover a
+                        new film I absolutely adore. The staff is passionate and
+                        friendly, always happy to chat about the latest films
+                        and recommend something outside my comfort zone. I
+                        highly recommend Soupflims for anyone looking for a more
+                        diverse and offbeat selection of movies.”
+                      </p>
+                      <div class="author-detail">
+                        <div class="name">By ShatGpt</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="testimonial-detail">
+                      <p>
+                        “I recently used the services of the movie rental
+                        company, SoupFilms, and I have to say, I was thoroughly
+                        impressed. The selection of movies available was vast
+                        and diverse, with something for everyone. The ordering
+                        process was simple and easy to navigate, and the movies
+                        arrived promptly and in great condition. The staff was
+                        also incredibly helpful and knowledgeable, always
+                        willing to answer any questions I had. Overall, I had a
+                        fantastic experience with SoupFilms and would highly
+                        recommend them to anyone in need of a movie rental
+                        service.”
+                      </p>
+                      <div class="author-detail">
+                        <div class="name">By RatGpt</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-arrows">
+                <button class="prev-button">
+                  <i class="icon icon-arrow-left"></i>
+                </button>
+                <button class="next-button">
+                  <i class="icon icon-arrow-right"></i>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <script src="js/jquery-1.11.0.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-      <script src="js/plugins.js"></script>
-      <script src="js/script.js"></script>
-      <script src="js/search.js"></script>
-    </body>
-  </html>
+    </section>
+    <section id="shipping-information">
+      <hr />
+      <div class="container">
+        <div
+          class="row d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="col-md-3 col-sm-6">
+            <div class="icon-box">
+              <i class="icon icon-truck"></i>
+              <h4 class="block-title">
+                <strong>Free shipping</strong> Over $200
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="icon-box">
+              <i class="icon icon-return"></i>
+              <h4 class="block-title">
+                <strong>Money back</strong> Return within 7 days
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="icon-box">
+              <i class="icon icon-tags1"></i>
+              <h4 class="block-title">
+                <strong>Buy 4 get 5th</strong> 50% off
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="icon-box">
+              <i class="icon icon-help_outline"></i>
+              <h4 class="block-title">
+                <strong>Any questions?</strong> Our experts are always ready
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </section>
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-menu-list">
+            <div class="row d-flex flex-wrap justify-content-between">
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer-menu">
+                  <h5 class="widget-title">Our Mission</h5>
+                  <p>
+                    To provide a unique and diverse selection of films for
+                    discerning movie enthusiasts. We strive to offer a curated
+                    collection films that are often overlooked by mainstream
+                    rental companies. Our knowledgeable staff is dedicated to
+                    helping customers discover new and exciting films, while
+                    fostering a sense of community among film lovers. We believe
+                    that every film has the power to inspire, educate and
+                    entertain and we're committed to making these films
+                    available to our customers.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer-menu">
+                  <h5 class="widget-title">Customer Service</h5>
+                  <ul class="menu-list list-unstyled">
+                    <li class="menu-item">
+                      <a href="#">FAQ</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#">Contact</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#">Privacy Policy</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#">Returns & Refunds</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#">Cookie Guidelines</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#">Delivery Information</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer-menu">
+                  <h5 class="widget-title">Contact Us</h5>
+                  <p>
+                    Do you have any questions or suggestions?
+                    <a href="#" class="email">support@soupflim.com</a>
+                  </p>
+                  <p>
+                    Do you need assistance? Give us a call. <br />
+                    <strong>+65 1234 5678</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer-menu">
+                  <h5 class="widget-title">SoupFlims</h5>
+                  <p>Find us on our social links!</p>
+                  <div class="social-links">
+                    <ul class="d-flex list-unstyled">
+                      <li>
+                        <a href="#">
+                          <i class="icon icon-facebook"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="icon icon-twitter"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="icon icon-youtube-play"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="icon icon-instagram"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </footer>
+    <div id="footer-bottom">
+      <div class="container">
+        <div class="row d-flex flex-wrap justify-content-between">
+          <div class="copyright">
+            <p>
+              Freebies by
+              <a href="https://templatesjungle.com/">Templates Jungle</a>
+            </p>
+          </div>
+          <div class="payment-method">
+            <p>Payment options :</p>
+            <div class="card-wrap">
+              <img src="images/visa-icon.jpg" alt="visa" />
+              <img src="images/mastercard.png" alt="mastercard" />
+              <img src="images/american-express.jpg" alt="american-express" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

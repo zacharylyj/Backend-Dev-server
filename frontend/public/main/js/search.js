@@ -1,17 +1,21 @@
 $("#search-form").submit(function (k) {
     k.preventDefault();
     const searchStr = $("#searchStr").val();
-
-
+    const sliderprice = $("#sliderprice").val();
+    console.log(searchStr)
+    console.log(sliderprice)
     const header = { authorization: `Bearer ${localStorage.getItem('JWT')}` }
-    const req = { params: { searchStr } }
-
+    const req = {
+        params: {
+            searchStr,
+            sliderprice
+        }
+    }
 
     $('.tab').removeClass('active');
     $('.active').removeClass('active');
     $('#search').addClass('active');
     $('li[data-tab-target="#search"]').addClass('active');
-
 
     const ul = document.getElementById("cat_header");
     var li = document.createElement('li');

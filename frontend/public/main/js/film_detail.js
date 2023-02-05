@@ -12,22 +12,22 @@ axios.get(getlink, {
     }
 })
 
-.then(response => {
+    .then(response => {
 
-    function h2tag(first_name, last_name){
-        return `<h2 class="my-3 text-secondary">${first_name} ${last_name}</h2>`
-    }
+        function h2tag(first_name, last_name) {
+            return `<h2 class="my-3 text-secondary">${first_name} ${last_name}</h2>`
+        }
 
-    matchlist = response.data
-    insertname = ""
+        matchlist = response.data
+        insertname = ""
 
-    matchlist.map(match => {
-        insertname += h2tag(match.first_name, match.last_name)
-    });
-    insertname += "<div/><div/>"
-    ranimg = "https://source.unsplash.com/700x900/?"+Math.floor(Math.random() * 1000)
-    insertHTML =  
-    `
+        matchlist.map(match => {
+            insertname += h2tag(match.first_name, match.last_name)
+        });
+        insertname += "<div/><div/>"
+        ranimg = "https://source.unsplash.com/700x900/?" + Math.floor(Math.random() * 1000)
+        insertHTML =
+            `
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src=${ranimg} alt="..." /></div>
@@ -53,12 +53,7 @@ axios.get(getlink, {
         <div class="lead px-5">
     `
 
-    insertHTML += insertname
+        insertHTML += insertname
+        document.getElementById("addHtml").innerHTML += insertHTML
 
-    document.getElementById("addHtml").innerHTML += insertHTML
-
-   
-
-
-
-})
+    })

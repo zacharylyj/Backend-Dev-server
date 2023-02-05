@@ -116,7 +116,7 @@ var user = {
             }
             else {
                 var sql = "select f.film_id, f.title, c.name, f.release_year, f.description, f.rating, a.first_name, a.last_name from film as f  inner join film_category as fc on f.film_id = fc.film_id inner join category as c on fc.category_id = c.category_id inner join film_actor as fa on f.film_id = fa.film_id inner join actor as a on fa.actor_id = a.actor_id where f.film_id=?";
-                dbConn.query(sql, [film_id],function (err, results) {
+                dbConn.query(sql, [film_id], function (err, results) {
                     dbConn.end();
                     return callback(err, results);
                 });
@@ -125,22 +125,24 @@ var user = {
     },
     //////////////////////////////////////////////////////////////////////////
     //search
-    getSearch: function (searchStr, callback) {
+    getSearch: function (object, callback) {
+        console.log(object)
+        console.log('object')
+        var { searchStr, sliderprice } = object
         var dbConn = dbConfig.getConnection();
-
         dbConn.connect(function (err) {
             if (err) {
                 return callback(err, null);
             }
             else {
-                var sql = `select * from film where title like '%${searchStr}%' limit 10`;
+                var sql = `SELECT * FROM film WHERE title LIKE '%${searchStr}%' AND rental_rate BETWEEN 0 AND ${sliderprice};`;
                 dbConn.query(sql, function (err, results) {
                     dbConn.end();
                     return callback(err, results);
                 });
             }
         });
-    },  
+    },
 
     //////////////////////////////////////////////////////////////////////////
     //8th endpoint
@@ -174,7 +176,7 @@ var user = {
             }
         });
     },
-    
+
     //////////////////////////////////////////////////////////////////////////
     //3rd endpoint
     addActor: function (object, callback) {
@@ -196,7 +198,7 @@ var user = {
             }
         });
     },
-    
+
 
     //////////////////////////////////////////////////////////////////////////
     //1st endpoint

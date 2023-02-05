@@ -144,9 +144,13 @@ app.get('/flim_content/:film_id', verificationLib.verifyToken, function (req, re
 });
 //////////////////////////////////////////////////////////////////////////
 //search
-app.get('/film_search', function (req, res) {
-    var searchStr = req.query.searchStr;
-    userDB.getSearch(searchStr, function (err, results) {
+app.get('/film_search', verificationLib.verifyToken, function (req, res) {
+    var searchStr = req.query.searchStr
+    var sliderprice = req.query.sliderprice;
+    object = { searchStr, sliderprice }
+    console.log('object')
+    console.log(object)
+    userDB.getSearch(object, function (err, results) {
         if (err) {
             console.log(err);
             res.status(500);
@@ -162,7 +166,7 @@ app.get('/film_search', function (req, res) {
 });
 //////////////////////////////////////////////////////////////////////////
 //8th endpoint
-app.post('/customers', function (req, res) {
+app.post('/customers', verificationLib.verifyToken, function (req, res) {
     if (req.body.address2 == undefined) {
         var address2 = null;
     }
@@ -212,7 +216,7 @@ app.post('/customers', function (req, res) {
 
 //////////////////////////////////////////////////////////////////////////
 //3rd endpoint
-app.post('/actors', function (req, res) {
+app.post('/actors', verificationLib.verifyToken, function (req, res) {
 
     if (req.body.first_name == null || req.body.last_name == null) {
         res.status(400);
